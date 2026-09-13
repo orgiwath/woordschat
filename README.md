@@ -30,28 +30,42 @@ largement suffisant pour un seul enfant et ça rend les sauvegardes triviales
 
 ## Architecture recommandée
 
-Un seul serveur Ubuntu suffit largement pour cet usage :
+Un seul petit conteneur Docker suffit largement pour cet usage — pas besoin
+de load balancer, de base de données séparée, ni de scaling. Deux variantes
+possibles selon où tourne Nginx :
 
+**Variante A — Nginx sur la même machine que Docker** (ex. un seul serveur Ubuntu OVH) :
 ```
-Internet (HTTPS) → Nginx (sur l'hôte Ubuntu, avec certificat Let's Encrypt)
+Internet (HTTPS) → Nginx (même hôte, certificat Let's Encrypt)
                        → reverse proxy vers 127.0.0.1:3210
                             → conteneur Docker "woordschat" (Node.js, port interne 3000)
                                  → volume Docker persistant (data/state.json)
 ```
+Ici le conteneur écoute uniquement sur `127.0.0.1:3210` (loopback) : même si
+quelqu'un scanne les ports de la machine, seuls 80/443 (gérés par Nginx)
+répondent. C'est le réglage par défaut le plus restrictif.
 
-- **Nginx tourne directement sur l'hôte** (installé via `apt`), pas dans Docker :
-  c'est le plus simple à gérer avec `certbot` pour le HTTPS, et c'est le
-  schéma que tu avais en tête.
-- **Le conteneur n'est jamais exposé directement à Internet** : il écoute
-  uniquement sur `127.0.0.1:3210` (voir `docker-compose.yml`), donc même si
-  quelqu'un scanne les ports de ton serveur, seuls 80/443 (gérés par Nginx)
-  répondent.
+**Variante B — Nginx (ou tout autre reverse proxy) sur une machine séparée**
+(homelab typique : un LXC/VM dédié au reverse proxy, un autre pour Docker) :
+```
+Internet/LAN/VPN → Nginx (autre hôte/LXC, ex. "eole")
+                       → reverse proxy vers <ip-lan>:3210
+                            → conteneur Docker "woordschat" sur un autre hôte/LXC (ex. "charlie")
+                                 → volume Docker persistant (data/state.json)
+```
+Dans ce cas, `127.0.0.1` ne fonctionne pas — vu depuis la machine du reverse
+proxy, `127.0.0.1` désigne cette machine-là, pas celle qui héberge Docker. Le
+port 3210 doit donc être exposé sur l'interface réseau du conteneur
+(`docker-compose.yml` : `"3210:3000"`, déjà le réglage par défaut de ce
+dépôt), et `nginx/woordschat.conf` doit pointer vers l'IP réelle de l'hôte
+Docker. La sécurité vient alors de l'isolation réseau (ce port ne doit être
+joignable que depuis ton LAN/VPN, jamais exposé directement sur internet) plutôt
+que du binding loopback.
+
 - **HTTPS est nécessaire, pas optionnel** : le code parent circule entre le
   téléphone et le serveur ; sans HTTPS il circulerait en clair sur le réseau.
-  D'où Nginx + Let's Encrypt (gratuit, renouvellement automatique).
-- Comme tu n'as qu'un seul enfant/foyer à gérer, pas besoin de load balancer,
-  de base de données séparée, ni de scaling — un seul petit conteneur suffit
-  et consomme quasiment rien (Node.js + un fichier JSON).
+  D'où Nginx + Let's Encrypt (gratuit, renouvellement automatique) — ou tout
+  reverse proxy équivalent gérant déjà le TLS dans ton homelab.
 
 **Accès public vs local uniquement.** Ce guide part du principe que tu veux
 pouvoir y accéder de n'importe où (ex. le téléphone de Charlie en 4G, pas

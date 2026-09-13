@@ -9,11 +9,17 @@ services:
       - DATA_DIR=/app/data
     volumes:
       - woordschat_data:/app/data
-    # Bound to localhost only: Nginx (running directly on the Ubuntu host,
-    # see nginx/woordschat.conf) reverse-proxies HTTPS traffic to this port.
-    # The app itself is never exposed directly to the internet.
+    # Exposed on the host's network interface (not just loopback) so a
+    # reverse proxy running on a SEPARATE host/LXC/VM (e.g. Nginx Proxy
+    # Manager, Traefik...) can reach it over the LAN/VPN — this is the
+    # common homelab setup (proxy and app on different machines).
+    # Security here comes from network isolation (this port should only be
+    # reachable from your LAN/VPN, never from the public internet directly).
+    #
+    # If Nginx runs on this SAME host instead, you can tighten this back to
+    # loopback-only: "127.0.0.1:3210:3000" (see README.md, section 4).
     ports:
-      - "127.0.0.1:3210:3000"
+      - "3210:3000"
 
 volumes:
   woordschat_data:
