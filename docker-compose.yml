@@ -1,0 +1,19 @@
+services:
+  woordschat:
+    build: .
+    image: woordschat:latest
+    container_name: woordschat
+    restart: unless-stopped
+    environment:
+      - PORT=3000
+      - DATA_DIR=/app/data
+    volumes:
+      - woordschat_data:/app/data
+    # Bound to localhost only: Nginx (running directly on the Ubuntu host,
+    # see nginx/woordschat.conf) reverse-proxies HTTPS traffic to this port.
+    # The app itself is never exposed directly to the internet.
+    ports:
+      - "127.0.0.1:3210:3000"
+
+volumes:
+  woordschat_data:

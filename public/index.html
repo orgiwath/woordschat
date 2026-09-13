@@ -1,0 +1,1671 @@
+<title>Woordschat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#FAF7F1;
+    --surface:#FFFFFF;
+    --surface-2:#F1EAD9;
+    --ink:#1B2733;
+    --ink-soft:#5B6B7C;
+    --ink-faint:#8B98A6;
+    --delft:#1F4E79;
+    --delft-deep:#153A5C;
+    --delft-tint:#E7EFF6;
+    --delft-surface:#1F4E79;
+    --delft-surface-deep:#153A5C;
+    --orange:#F2761E;
+    --orange-deep:#D9600F;
+    --orange-tint:#FDE9DA;
+    --success:#2F9E6E;
+    --success-tint:#E3F5EC;
+    --danger:#D64545;
+    --danger-tint:#FBE8E7;
+    --border:#E6DCC7;
+    --shadow: 0 1px 2px rgba(27,39,51,.06), 0 8px 24px -12px rgba(27,39,51,.18);
+    --radius-s: 10px;
+    --radius-m: 16px;
+    --radius-l: 24px;
+    --font-display: 'Baloo 2', 'Segoe UI Rounded', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1720;
+      --surface:#182430;
+      --surface-2:#1F2E3D;
+      --ink:#F3EEE1;
+      --ink-soft:#AAB8C6;
+      --ink-faint:#7C8B9A;
+      --delft:#7FB1E8;
+      --delft-deep:#5A93D1;
+      --delft-tint:#1C2E40;
+      --delft-surface:#2C5D8A;
+      --delft-surface-deep:#1B3A57;
+      --orange:#FF9151;
+      --orange-deep:#F2761E;
+      --orange-tint:#3A2818;
+      --success:#57CC9B;
+      --success-tint:#153427;
+      --danger:#FF7A6E;
+      --danger-tint:#3A1E1C;
+      --border:#2A3B4C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1720;
+    --surface:#182430;
+    --surface-2:#1F2E3D;
+    --ink:#F3EEE1;
+    --ink-soft:#AAB8C6;
+    --ink-faint:#7C8B9A;
+    --delft:#7FB1E8;
+    --delft-deep:#5A93D1;
+    --delft-tint:#1C2E40;
+    --delft-surface:#2C5D8A;
+    --delft-surface-deep:#1B3A57;
+    --orange:#FF9151;
+    --orange-deep:#F2761E;
+    --orange-tint:#3A2818;
+    --success:#57CC9B;
+    --success-tint:#153427;
+    --danger:#FF7A6E;
+    --danger-tint:#3A1E1C;
+    --border:#2A3B4C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  #app{
+    max-width:520px;
+    margin:0 auto;
+    padding:20px 18px calc(28px + env(safe-area-inset-bottom));
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance;}
+  p{margin:0;}
+  button{font-family:inherit;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+  a, button, input, [tabindex]{
+    outline-offset:3px;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+    outline:2.5px solid var(--orange);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand-mark{
+    width:38px;height:38px;border-radius:11px;
+    background:linear-gradient(155deg, var(--delft-surface), var(--delft-surface-deep));
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;
+    box-shadow: var(--shadow);
+    flex-shrink:0;
+  }
+  .brand-name{
+    font-family:var(--font-display);
+    font-size:19px;
+    font-weight:700;
+    color:var(--delft);
+    letter-spacing:.2px;
+  }
+  .back-btn{
+    background:none;border:none;color:var(--ink-soft);
+    font-family:var(--font-body);font-weight:700;font-size:15px;
+    display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 4px;
+  }
+  .icon-btn{
+    background:var(--surface);
+    border:1px solid var(--border);
+    width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;cursor:pointer;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- home ---------- */
+  .hero-card{
+    background:linear-gradient(155deg, var(--delft-surface) 0%, var(--delft-surface-deep) 100%);
+    border-radius:var(--radius-l);
+    padding:20px 20px 18px;
+    color:#fff;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-card::after{
+    content:"🌷";
+    position:absolute;
+    right:-6px; bottom:-16px;
+    font-size:86px;
+    opacity:.14;
+    transform:rotate(8deg);
+  }
+  .hero-greet{
+    font-family:var(--font-display);
+    font-size:22px;
+    margin-bottom:2px;
+    position:relative;
+  }
+  .hero-sub{
+    font-size:13.5px;
+    opacity:.85;
+    margin-bottom:16px;
+    position:relative;
+  }
+  .hero-stats{
+    display:flex;
+    gap:10px;
+    position:relative;
+  }
+  .hero-stat{
+    background:rgba(255,255,255,.14);
+    border-radius:var(--radius-m);
+    padding:10px 12px;
+    flex:1;
+  }
+  .hero-stat .num{
+    font-family:var(--font-display);
+    font-size:20px;
+    font-weight:700;
+    display:flex;align-items:center;gap:5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-stat .lbl{font-size:11px;opacity:.8;margin-top:1px;}
+  .xp-track{
+    margin-top:14px;
+    position:relative;
+  }
+  .xp-bar-bg{
+    height:9px;border-radius:99px;background:rgba(255,255,255,.22);overflow:hidden;
+  }
+  .xp-bar-fill{
+    height:100%;border-radius:99px;
+    background:var(--orange);
+    transition:width .5s ease;
+  }
+  .xp-track .xp-lbl{
+    font-size:11px;opacity:.85;margin-top:5px;display:flex;justify-content:space-between;
+  }
+
+  .section-title{
+    font-family:var(--font-display);
+    font-size:15px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin:4px 0 10px;
+  }
+
+  .mode-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .mode-card{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-m);
+    padding:14px;
+    text-align:left;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .mode-card:active{transform:scale(.98);}
+  .mode-emoji{
+    width:46px;height:46px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:23px;flex-shrink:0;
+  }
+  .mode-card.m1 .mode-emoji{background:var(--orange-tint);}
+  .mode-card.m2 .mode-emoji{background:var(--delft-tint);}
+  .mode-card.m3 .mode-emoji{background:var(--success-tint);}
+  .mode-text .mode-title{
+    font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--ink);
+  }
+  .mode-text .mode-desc{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .mode-chev{margin-left:auto;color:var(--ink-faint);font-size:18px;}
+
+  .cat-scroll{
+    display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .cat-chip{
+    flex:0 0 auto;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:99px;
+    padding:8px 14px;
+    font-size:13.5px;font-weight:600;
+    display:flex;align-items:center;gap:6px;
+    cursor:pointer;color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .cat-chip.active{
+    background:var(--delft-surface);border-color:var(--delft-surface);color:#fff;
+  }
+
+  .badge-strip{
+    display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;
+  }
+  .badge-chip{
+    flex:0 0 auto;width:64px;text-align:center;
+  }
+  .badge-circle{
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:23px;margin:0 auto 4px;
+    background:var(--surface-2);border:1px solid var(--border);
+  }
+  .badge-circle.earned{
+    background:linear-gradient(155deg, var(--orange-tint), var(--surface));
+    border-color:var(--orange);
+  }
+  .badge-circle.locked{filter:grayscale(1);opacity:.45;}
+  .badge-chip .b-name{font-size:10px;color:var(--ink-soft);line-height:1.2;}
+
+  .footer-links{
+    margin-top:auto;
+    padding-top:22px;
+    display:flex;justify-content:center;
+  }
+  .ghost-link{
+    background:none;border:none;color:var(--ink-faint);font-size:12.5px;
+    cursor:pointer;padding:8px;font-family:var(--font-body);
+  }
+
+  /* ---------- exercise screen ---------- */
+  .progress-row{
+    display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  }
+  .progress-track{
+    flex:1;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;
+  }
+  .progress-fill{height:100%;background:var(--orange);border-radius:99px;transition:width .3s ease;}
+  .progress-count{font-size:12.5px;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+  .timer-pill{
+    background:var(--danger-tint);color:var(--danger);
+    font-weight:800;font-size:13px;padding:5px 11px;border-radius:99px;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .q-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-l);padding:26px 22px;box-shadow:var(--shadow);
+    text-align:center;margin-bottom:18px;
+  }
+  .q-kicker{font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:10px;}
+  .q-prompt{font-family:var(--font-display);font-size:25px;font-weight:700;color:var(--ink);text-wrap:balance;}
+  .q-flag{font-size:26px;margin-bottom:6px;display:block;}
+  .listen-btn{
+    margin-top:16px;
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--delft-tint);color:var(--delft);
+    border:none;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;cursor:pointer;
+  }
+
+  .opts-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  .opt-btn{
+    background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-m);
+    padding:14px 16px;font-size:16px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer;
+  }
+  .opt-btn:active{transform:scale(.99);}
+  .opt-btn.correct{background:var(--success-tint);border-color:var(--success);color:var(--success);}
+  .opt-btn.wrong{background:var(--danger-tint);border-color:var(--danger);color:var(--danger);}
+  .opt-btn.dim{opacity:.5;}
+  .opts-vf{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .opt-vf-btn{
+    background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-m);
+    padding:18px;font-size:17px;font-weight:700;cursor:pointer;
+  }
+
+  .text-input-row{display:flex;flex-direction:column;gap:12px;}
+  .text-input{
+    width:100%;padding:15px 16px;border-radius:var(--radius-m);border:1.5px solid var(--border);
+    background:var(--surface);color:var(--ink);font-size:17px;font-family:var(--font-body);
+  }
+  .text-input.correct{border-color:var(--success);background:var(--success-tint);}
+  .text-input.wrong{border-color:var(--danger);background:var(--danger-tint);}
+  .row-2{display:flex;gap:10px;}
+  .btn{
+    border:none;border-radius:var(--radius-m);padding:14px 18px;font-weight:700;font-size:15.5px;
+    cursor:pointer;font-family:var(--font-body);
+  }
+  .btn-primary{background:var(--orange);color:#fff;flex:1;}
+  .btn-primary:disabled{opacity:.45;}
+  .btn-ghost{background:var(--surface-2);color:var(--ink-soft);}
+  .btn-block{width:100%;}
+  .btn-dark{background:var(--delft-surface);color:#fff;}
+
+  .feedback-banner{
+    margin-top:14px;border-radius:var(--radius-m);padding:12px 14px;font-size:14px;font-weight:600;
+    display:flex;align-items:center;gap:8px;
+  }
+  .feedback-banner.ok{background:var(--success-tint);color:var(--success);}
+  .feedback-banner.ko{background:var(--danger-tint);color:var(--danger);}
+
+  /* association */
+  .assoc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px;}
+  .assoc-col{display:flex;flex-direction:column;gap:9px;}
+  .assoc-item{
+    background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-s);
+    padding:12px 10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;color:var(--ink);
+    min-height:44px;display:flex;align-items:center;justify-content:center;
+  }
+  .assoc-item.selected{border-color:var(--orange);background:var(--orange-tint);color:var(--orange-deep);}
+  .assoc-item.matched{border-color:var(--success);background:var(--success-tint);color:var(--success);opacity:.65;cursor:default;}
+  .assoc-item.shake{border-color:var(--danger);background:var(--danger-tint);}
+
+  /* summary */
+  .summary-hero{text-align:center;padding:26px 10px 8px;}
+  .summary-emoji{font-size:52px;margin-bottom:8px;}
+  .summary-score{font-family:var(--font-display);font-size:30px;font-weight:800;color:var(--delft);}
+  .summary-sub{color:var(--ink-soft);font-size:14px;margin-top:4px;}
+  .xp-gain-pill{
+    display:inline-flex;align-items:center;gap:6px;background:var(--orange-tint);color:var(--orange-deep);
+    padding:8px 16px;border-radius:99px;font-weight:800;font-size:15px;margin-top:14px;
+  }
+  .new-badge-row{margin-top:22px;}
+  .new-badge-card{
+    display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--orange);
+    border-radius:var(--radius-m);padding:12px 14px;margin-bottom:8px;
+  }
+  .new-badge-card .be{font-size:28px;}
+  .new-badge-card .bt{font-weight:700;font-size:14px;}
+  .new-badge-card .bd{font-size:12px;color:var(--ink-soft);}
+
+  /* badges page */
+  .badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+  .badge-tile{text-align:center;}
+  .badge-tile .badge-circle{width:64px;height:64px;font-size:28px;}
+  .badge-tile .b-name{font-size:11.5px;font-weight:700;margin-top:6px;color:var(--ink);}
+  .badge-tile .b-desc{font-size:10.5px;color:var(--ink-faint);margin-top:2px;line-height:1.3;}
+
+  /* admin */
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);
+    padding:16px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .field-label{font-size:12.5px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;display:block;}
+  .field{margin-bottom:12px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:11px 12px;border-radius:var(--radius-s);border:1.5px solid var(--border);
+    background:var(--bg);color:var(--ink);font-size:15px;font-family:var(--font-body);
+  }
+  .field textarea{min-height:90px;resize:vertical;font-family:ui-monospace,monospace;font-size:12.5px;}
+  .word-row{
+    display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);
+  }
+  .word-row:last-child{border-bottom:none;}
+  .word-row .wtext{flex:1;min-width:0;}
+  .word-row .wfr{font-weight:700;font-size:14px;}
+  .word-row .wnl{font-size:12.5px;color:var(--ink-soft);}
+  .word-row .wcat{font-size:10.5px;color:var(--ink-faint);}
+  .row-actions{display:flex;gap:6px;flex-shrink:0;}
+  .icon-sm{
+    width:32px;height:32px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-soft);
+  }
+  .pin-dots{display:flex;gap:12px;justify-content:center;margin:22px 0;}
+  .pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);}
+  .pin-dot.filled{background:var(--delft-surface);border-color:var(--delft-surface);}
+  .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:280px;margin:0 auto;}
+  .key-btn{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);
+    padding:16px 0;font-size:20px;font-weight:700;cursor:pointer;color:var(--ink);
+  }
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .stat-box{background:var(--surface-2);border-radius:var(--radius-m);padding:12px 14px;}
+  .stat-box .n{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--delft);}
+  .stat-box .l{font-size:11.5px;color:var(--ink-soft);}
+  .tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--surface-2);padding:4px;border-radius:var(--radius-m);}
+  .tab-btn{flex:1;text-align:center;padding:9px 4px;border-radius:11px;border:none;background:none;font-weight:700;font-size:12.5px;color:var(--ink-soft);cursor:pointer;}
+  .tab-btn.active{background:var(--surface);color:var(--delft);box-shadow:var(--shadow);}
+  .heat-wrap{overflow-x:auto;padding-bottom:2px;}
+  .heat-grid{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;gap:3px;width:max-content;}
+  .heat-cell{width:14px;height:14px;border-radius:4px;background:var(--surface-2);cursor:pointer;}
+  .heat-legend{display:flex;align-items:center;gap:5px;margin-top:10px;font-size:10.5px;color:var(--ink-faint);}
+  .heat-legend .heat-cell{cursor:default;}
+  .heat-daylabels{display:grid;grid-template-rows:repeat(7,14px);gap:3px;margin-right:6px;}
+  .heat-daylabels span{font-size:9px;color:var(--ink-faint);line-height:14px;}
+  .heat-row{display:flex;}
+  .session-list{display:flex;flex-direction:column;}
+  .session-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .session-row:last-child{border-bottom:none;}
+  .session-row .se{font-size:20px;flex-shrink:0;}
+  .session-row .sm{flex:1;min-width:0;}
+  .session-row .sm .st{font-size:13px;font-weight:700;color:var(--ink);}
+  .session-row .sm .sd{font-size:11.5px;color:var(--ink-soft);}
+  .session-row .sr{font-size:12.5px;font-weight:700;color:var(--ink-soft);text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;}
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%);
+    background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:99px;font-size:13.5px;font-weight:600;
+    box-shadow:var(--shadow);z-index:50;max-width:88vw;text-align:center;
+  }
+  @media (max-width:400px){
+    #app{padding:16px 14px 24px;}
+    .q-prompt{font-size:22px;}
+  }
+</style>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ SEED DATA ============ */
+  var SEED_WORDBANK = {
+    categories: [
+      { id:"kennismaking", name:"Faire connaissance", emoji:"👋" }
+    ],
+    words: [
+      { id:"w1", category:"kennismaking", fr:"Bonjour", nl:"Hallo", alt:["Dag","Goedendag"] },
+      { id:"w2", category:"kennismaking", fr:"Au revoir", nl:"Tot ziens", alt:["Dag","Doei"] },
+      { id:"w3", category:"kennismaking", fr:"Comment vas-tu ?", nl:"Hoe gaat het met jou?", alt:["Hoe gaat het?"] },
+      { id:"w4", category:"kennismaking", fr:"Je vais bien", nl:"Het gaat goed", alt:["Het gaat goed met mij"] },
+      { id:"w5", category:"kennismaking", fr:"Je ne vais pas bien", nl:"Het gaat niet goed", alt:["Het gaat niet zo goed"] },
+      { id:"w6", category:"kennismaking", fr:"Comment t'appelles-tu ?", nl:"Hoe heet je?", alt:[] },
+      { id:"w7", category:"kennismaking", fr:"Je m'appelle Charlie", nl:"Ik heet Charlie", alt:[] },
+      { id:"w8", category:"kennismaking", fr:"Quel âge as-tu ?", nl:"Hoe oud ben je?", alt:[] },
+      { id:"w9", category:"kennismaking", fr:"J'ai treize ans", nl:"Ik ben dertien jaar", alt:["Ik ben dertien jaar oud"] },
+      { id:"w10", category:"kennismaking", fr:"Où habites-tu ?", nl:"Waar woon je?", alt:[] },
+      { id:"w11", category:"kennismaking", fr:"J'habite à Sydney", nl:"Ik woon in Sydney", alt:[] }
+    ]
+  };
+
+  var LEVELS = [
+    { xp:0,    title:"Nieuweling",        sub:"Débutant",              emoji:"🌱" },
+    { xp:60,   title:"Ontdekker",         sub:"Explorateur",           emoji:"🧭" },
+    { xp:150,  title:"Fietser",           sub:"Cycliste",              emoji:"🚲" },
+    { xp:280,  title:"Molenwachter",      sub:"Gardien du moulin",     emoji:"🌬️" },
+    { xp:450,  title:"Tulpenkweker",      sub:"Cultivateur de tulipes",emoji:"🌷" },
+    { xp:660,  title:"Kaasmeester",       sub:"Maître fromager",       emoji:"🧀" },
+    { xp:920,  title:"Klompenmaker",      sub:"Fabricant de sabots",   emoji:"👞" },
+    { xp:1230, title:"Grachtenkapitein",  sub:"Capitaine des canaux",  emoji:"⛵" },
+    { xp:1600, title:"Leeuw v/d Lage Landen", sub:"Lion des Plats Pays", emoji:"🦁" },
+    { xp:2050, title:"Meester Vertaler",  sub:"Maître traducteur",     emoji:"👑" }
+  ];
+
+  var BADGES = [
+    { id:"first",     emoji:"🌱", name:"Eerste stap",     desc:"Termine ton tout premier exercice" },
+    { id:"streak7",   emoji:"🔥", name:"Volle week",       desc:"7 jours de suite à t'entraîner" },
+    { id:"perfect",   emoji:"✨", name:"Sans faute",       desc:"Une session à 100% (min. 8 questions)" },
+    { id:"ten",       emoji:"💬", name:"Bavard",           desc:"10 mots maîtrisés" },
+    { id:"twentyfive",emoji:"📚", name:"Polyglotte en herbe", desc:"25 mots maîtrisés" },
+    { id:"allmodes",  emoji:"🧩", name:"Tous les chemins", desc:"Essaie les 3 modes de jeu" },
+    { id:"hundred",   emoji:"💯", name:"Honderd",          desc:"100 bonnes réponses cumulées" },
+    { id:"lightning", emoji:"⚡", name:"Bliksem",          desc:"Termine un Défi chrono avec 90%+ de réussite" },
+    { id:"lvl5",      emoji:"🌷", name:"Tulpenkweker",     desc:"Atteins le niveau 5" },
+    { id:"lvl10",     emoji:"👑", name:"Meester",          desc:"Atteins le niveau 10" }
+  ];
+
+  var MODE_TYPES = {
+    entrainement: ["qcm","vf","texte","ecoute"],
+    chrono: ["qcm","vf"]
+  };
+
+  var STORAGE_KEY = "woordschat_v1";
+  var DEFAULT_PIN = "1234";
+
+  /* ============ STATE / STORAGE ============
+     The server is now the source of truth (see server.js): the word bank,
+     categories and progress live in a shared file on the host, not just in
+     this browser's localStorage. localStorage is kept only as an instant-load
+     cache so the app still renders something the moment it opens, even
+     offline; syncFromServer() then reconciles it with the shared state. */
+  function loadState(){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){}
+    var data = null;
+    if(raw){ try{ data = JSON.parse(raw); }catch(e){ data = null; } }
+    if(!data){
+      data = {
+        wordbank: JSON.parse(JSON.stringify(SEED_WORDBANK)),
+        progress: {
+          xp:0, streak:0, bestStreak:0, lastActiveDate:null, lastActiveAt:null,
+          wordStats:{}, badges:{}, modesUsed:{}, totalCorrect:0,
+          totalTimeSec:0, sessionsCount:0,
+          history:[], dailyLog:{}
+        },
+        settings:{ pin: DEFAULT_PIN, childName:"Charlie" }
+      };
+    }
+    if(!data.settings) data.settings = { pin: DEFAULT_PIN, childName:"Charlie" };
+    if(!data.settings.pin) data.settings.pin = DEFAULT_PIN;
+    if(!data.settings.childName) data.settings.childName = "Charlie";
+    if(!data.progress.modesUsed) data.progress.modesUsed = {};
+    if(!data.progress.history) data.progress.history = [];
+    if(!data.progress.dailyLog) data.progress.dailyLog = {};
+    if(typeof data.progress.totalTimeSec!=="number") data.progress.totalTimeSec = 0;
+    if(typeof data.progress.sessionsCount!=="number") data.progress.sessionsCount = 0;
+    if(typeof data.progress.bestStreak!=="number") data.progress.bestStreak = data.progress.streak||0;
+    if(!data.progress.lastActiveAt) data.progress.lastActiveAt = null;
+    return data;
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }catch(e){}
+    pushProgress();
+  }
+
+  var DB = loadState();
+  var view = { screen:"home", data:{} };
+
+  /* ============ SERVER SYNC ============ */
+  var adminPin = null;           // held in memory only while the parent is logged in
+  var lastSyncOk = null;         // null = never tried yet, true/false after first attempt
+  var lastSyncAt = null;
+  var pushProgressTimer = null;
+
+  /* Every call is wrapped in try/catch: on a browser with no fetch() at all
+     (or any other synchronous failure), this turns it into a rejected
+     promise instead of crashing the caller, so the app always falls back to
+     its offline/local behaviour instead of breaking. */
+  function apiGet(path){
+    try{
+      return fetch(path, { headers:{ "Accept":"application/json" } }).then(function(r){
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      });
+    }catch(e){ return Promise.reject(e); }
+  }
+  function apiPut(path, body, extraHeaders){
+    try{
+      var headers = { "Content-Type":"application/json" };
+      if(extraHeaders){ for(var k in extraHeaders){ headers[k]=extraHeaders[k]; } }
+      return fetch(path, { method:"PUT", headers:headers, body:JSON.stringify(body) }).then(function(r){
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      });
+    }catch(e){ return Promise.reject(e); }
+  }
+  function apiPost(path, body){
+    try{
+      return fetch(path, { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(body) })
+        .then(function(r){ return r.json(); });
+    }catch(e){ return Promise.reject(e); }
+  }
+
+  /* Pulls the shared word bank + progress from the server. Called on boot,
+     every 25s, and whenever the app becomes visible again — this is what
+     makes a word/category the parent adds show up on Charlie's phone without
+     anyone doing anything else. Progress is only overwritten while the child
+     isn't mid-exercise, so an active session is never disrupted. */
+  function syncFromServer(){
+    return apiGet("/api/state").then(function(data){
+      DB.wordbank = data.wordbank;
+      DB.settings.childName = data.childName;
+      if(view.screen!=="session" && view.screen!=="association"){
+        DB.progress = data.progress;
+      }
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }catch(e){}
+      lastSyncOk = true; lastSyncAt = Date.now();
+      if(["home","badges","adminLogin","admin"].indexOf(view.screen)!==-1) render();
+    }).catch(function(){
+      lastSyncOk = false;
+    });
+  }
+  function pushProgress(){
+    if(pushProgressTimer) clearTimeout(pushProgressTimer);
+    pushProgressTimer = setTimeout(function(){
+      apiPut("/api/progress", DB.progress).then(function(){
+        lastSyncOk = true; lastSyncAt = Date.now();
+      }).catch(function(){ lastSyncOk = false; });
+    }, 400);
+  }
+  function pushWordbank(){
+    return apiPut("/api/admin/wordbank", DB.wordbank, { "X-Admin-Pin": adminPin }).then(function(){
+      lastSyncOk = true; lastSyncAt = Date.now();
+    }).catch(function(){
+      lastSyncOk = false;
+      toast("⚠️ Pas de connexion au serveur — ce changement n'est pas encore synchronisé");
+    });
+  }
+  function pushSettings(){
+    return apiPut("/api/admin/settings", DB.settings, { "X-Admin-Pin": adminPin }).then(function(){
+      adminPin = DB.settings.pin;
+      lastSyncOk = true; lastSyncAt = Date.now();
+    }).catch(function(){
+      lastSyncOk = false;
+      toast("⚠️ Pas de connexion au serveur — ce changement n'est pas encore synchronisé");
+    });
+  }
+
+  /* ============ HELPERS ============ */
+  function $(id){ return document.getElementById(id); }
+  function el(html){ var t=document.createElement("template"); t.innerHTML=html.trim(); return t.content.firstChild; }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function daysBetween(a,b){
+    var da = new Date(a+"T00:00:00"), db_ = new Date(b+"T00:00:00");
+    return Math.round((db_-da)/86400000);
+  }
+  function formatDuration(totalSec){
+    totalSec = totalSec||0;
+    if(totalSec<60) return totalSec+" s";
+    var mins = Math.round(totalSec/60);
+    if(mins<60) return mins+" min";
+    var h = Math.floor(mins/60), m = mins%60;
+    return h+" h"+(m? " "+m+" min" : "");
+  }
+  function formatClock(d){
+    return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+  }
+  function formatWhen(iso){
+    if(!iso) return "Jamais encore";
+    var d = new Date(iso);
+    var now = new Date();
+    if(d.toDateString()===now.toDateString()) return "Aujourd'hui à "+formatClock(d);
+    var yest = new Date(now); yest.setDate(now.getDate()-1);
+    if(d.toDateString()===yest.toDateString()) return "Hier à "+formatClock(d);
+    var diffDays = Math.round((now-d)/86400000);
+    if(diffDays<7) return "Il y a "+diffDays+" jours";
+    return d.toLocaleDateString("fr-BE")+" à "+formatClock(d);
+  }
+  var MODE_LABELS = { entrainement:"🧠 Entraînement", association:"🧩 Association", chrono:"⏱️ Défi chrono" };
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function normalize(s){
+    return String(s).trim().toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g,"")
+      .replace(/['".,!?;:]/g,"")
+      .replace(/\s+/g," ");
+  }
+  function wordStat(id){
+    if(!DB.progress.wordStats[id]) DB.progress.wordStats[id] = { box:0, correct:0, wrong:0 };
+    return DB.progress.wordStats[id];
+  }
+  function levelInfo(xp){
+    var idx = 0;
+    for(var i=0;i<LEVELS.length;i++){ if(xp>=LEVELS[i].xp) idx=i; }
+    var cur = LEVELS[idx];
+    var next = LEVELS[idx+1];
+    var span = next ? next.xp-cur.xp : 1;
+    var into = next ? xp-cur.xp : span;
+    return { idx:idx+1, level:cur, next:next, pct: next? Math.min(100, Math.round(into/span*100)) : 100 };
+  }
+  function categoryName(id){
+    var c = DB.wordbank.categories.find(function(c){return c.id===id;});
+    return c ? c.name : id;
+  }
+  function categoryEmoji(id){
+    var c = DB.wordbank.categories.find(function(c){return c.id===id;});
+    return c ? c.emoji : "🔤";
+  }
+  function wordsInScope(catId){
+    if(!catId || catId==="all" || (Array.isArray(catId) && catId.length===0)) return DB.wordbank.words.slice();
+    var ids = Array.isArray(catId) ? catId : [catId];
+    return DB.wordbank.words.filter(function(w){return ids.indexOf(w.category)!==-1;});
+  }
+  function toast(msg){
+    var old = document.querySelector(".toast");
+    if(old) old.remove();
+    var t = el('<div class="toast" role="status">'+escapeHtml(msg)+'</div>');
+    document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 2200);
+  }
+
+  /* ============ SPEECH ============ */
+  var voicesReady = false, nlVoice = null;
+  function primeVoices(){
+    if(!("speechSynthesis" in window)) return;
+    var vs = speechSynthesis.getVoices();
+    if(vs && vs.length){
+      nlVoice = vs.find(function(v){return v.lang && v.lang.toLowerCase().indexOf("nl")===0;}) || null;
+      voicesReady = true;
+    }
+  }
+  if("speechSynthesis" in window){
+    primeVoices();
+    speechSynthesis.onvoiceschanged = primeVoices;
+  }
+  function speakNL(text){
+    if(!("speechSynthesis" in window)) return false;
+    try{
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = "nl-NL";
+      if(nlVoice) u.voice = nlVoice;
+      u.rate = 0.88;
+      speechSynthesis.speak(u);
+      return true;
+    }catch(e){ return false; }
+  }
+
+  /* ============ BADGE / STREAK / LEVEL LOGIC ============ */
+  function masteredCount(){
+    var n=0;
+    Object.keys(DB.progress.wordStats).forEach(function(id){
+      if(DB.progress.wordStats[id].box>=4) n++;
+    });
+    return n;
+  }
+  function checkBadges(){
+    var newly = [];
+    function grant(id){
+      if(!DB.progress.badges[id]){ DB.progress.badges[id]=new Date().toISOString(); newly.push(id); }
+    }
+    if(DB.progress.history.length>=1) grant("first");
+    if(DB.progress.streak>=7) grant("streak7");
+    if(masteredCount()>=10) grant("ten");
+    if(masteredCount()>=25) grant("twentyfive");
+    if(DB.progress.totalCorrect>=100) grant("hundred");
+    if(DB.progress.modesUsed.entrainement && DB.progress.modesUsed.association && DB.progress.modesUsed.chrono) grant("allmodes");
+    var li = levelInfo(DB.progress.xp);
+    if(li.idx>=5) grant("lvl5");
+    if(li.idx>=10) grant("lvl10");
+    return newly.map(function(id){ return BADGES.find(function(b){return b.id===id;}); });
+  }
+  function bumpStreak(){
+    var t = todayStr();
+    if(DB.progress.lastActiveDate!==t){
+      if(DB.progress.lastActiveDate && daysBetween(DB.progress.lastActiveDate,t)===1){
+        DB.progress.streak += 1;
+      } else {
+        DB.progress.streak = 1;
+      }
+      DB.progress.lastActiveDate = t;
+      if(!DB.progress.bestStreak || DB.progress.streak>DB.progress.bestStreak){
+        DB.progress.bestStreak = DB.progress.streak;
+      }
+    }
+  }
+
+  /* Records one finished session: cumulative time, per-day log (kept 90 days),
+     and the timestamp shown as "last activity" in the parent stats. */
+  function logUsage(durationSec){
+    var now = new Date();
+    DB.progress.lastActiveAt = now.toISOString();
+    DB.progress.totalTimeSec += durationSec;
+    DB.progress.sessionsCount += 1;
+    var t = todayStr();
+    if(!DB.progress.dailyLog[t]) DB.progress.dailyLog[t] = { sessions:0, seconds:0 };
+    DB.progress.dailyLog[t].sessions += 1;
+    DB.progress.dailyLog[t].seconds += durationSec;
+    var cutoff = new Date(now); cutoff.setDate(cutoff.getDate()-90);
+    Object.keys(DB.progress.dailyLog).forEach(function(d){
+      if(new Date(d+"T00:00:00") < cutoff) delete DB.progress.dailyLog[d];
+    });
+  }
+
+  /* ============ EXERCISE GENERATION ============ */
+  function weightFor(w){
+    var st = wordStat(w.id);
+    var base = Math.pow(5-st.box,2)+1;
+    return base;
+  }
+  function weightedSample(pool, n){
+    var out = [];
+    var copies = pool.map(function(w){return {w:w, weight:weightFor(w)};});
+    for(var k=0;k<n;k++){
+      if(!copies.length) copies = pool.map(function(w){return {w:w, weight:weightFor(w)};});
+      var total = copies.reduce(function(s,c){return s+c.weight;},0);
+      var r = Math.random()*total, acc=0, chosenIdx=0;
+      for(var i=0;i<copies.length;i++){ acc+=copies[i].weight; if(r<=acc){chosenIdx=i;break;} }
+      out.push(copies[chosenIdx].w);
+      copies.splice(chosenIdx,1);
+    }
+    return out;
+  }
+  function buildDistractors(correctWord, direction, pool, count){
+    var others = pool.filter(function(w){return w.id!==correctWord.id;});
+    var texts = shuffle(others).map(function(w){ return direction==="fr2nl" ? w.nl : w.fr; });
+    var uniq = [];
+    texts.forEach(function(t){
+      var target = direction==="fr2nl" ? correctWord.nl : correctWord.fr;
+      if(uniq.indexOf(t)===-1 && t!==target) uniq.push(t);
+    });
+    return uniq.slice(0,count);
+  }
+  function makeQuestion(word, pool, allowedTypes){
+    var direction = Math.random()<0.5 ? "fr2nl" : "nl2fr";
+    var type = pick(allowedTypes);
+    if(type==="ecoute" && !("speechSynthesis" in window)) type="qcm";
+    if(type==="ecoute") direction = "fr2nl"; // always listen to NL, answer meaning
+    var q = { word:word, direction:direction, type:type };
+    if(type==="qcm" || type==="ecoute"){
+      var distractors = buildDistractors(word, type==="ecoute" ? "nl2fr" : direction, pool, 3);
+      while(distractors.length<3 && pool.length>1){
+        var extra = pick(pool);
+        var val = type==="ecoute" ? extra.fr : (direction==="fr2nl"?extra.nl:extra.fr);
+        if(distractors.indexOf(val)===-1 && val!==(type==="ecoute"?word.fr:(direction==="fr2nl"?word.nl:word.fr))) distractors.push(val);
+        else break;
+      }
+      var correctVal = type==="ecoute" ? word.fr : (direction==="fr2nl" ? word.nl : word.fr);
+      q.options = shuffle(distractors.concat([correctVal]));
+      q.correct = correctVal;
+    } else if(type==="vf"){
+      var isTrue = Math.random()<0.5;
+      var shownVal;
+      if(isTrue){ shownVal = direction==="fr2nl" ? word.nl : word.fr; }
+      else {
+        var otherPool = pool.filter(function(w){return w.id!==word.id;});
+        var otherWord = otherPool.length ? pick(otherPool) : word;
+        shownVal = direction==="fr2nl" ? otherWord.nl : otherWord.fr;
+      }
+      q.shown = shownVal;
+      q.isTrue = isTrue;
+    }
+    return q;
+  }
+  function buildSessionQueue(mode, catId, length){
+    var pool = wordsInScope(catId);
+    if(!pool.length) return [];
+    var allowedTypes = MODE_TYPES[mode] || MODE_TYPES.entrainement;
+    var picks = weightedSample(pool, length);
+    return picks.map(function(w){ return makeQuestion(w, pool, allowedTypes); });
+  }
+
+  /* ============ RENDER: SHELL ============ */
+  function render(){
+    var app = $("app");
+    app.innerHTML = "";
+    var screens = {
+      home: renderHome, session: renderSession, summary: renderSummary,
+      badges: renderBadges, association: renderAssociation, assocResult: renderAssocResult,
+      adminLogin: renderAdminLogin, admin: renderAdmin
+    };
+    (screens[view.screen] || renderHome)(app);
+    window.scrollTo(0,0);
+  }
+
+  function topbar(app, opts){
+    opts = opts || {};
+    var bar = el('<div class="topbar"></div>');
+    if(opts.back){
+      var b = el('<button class="back-btn" aria-label="Retour">‹ Retour</button>');
+      b.onclick = opts.back;
+      bar.appendChild(b);
+    } else {
+      var brand = el('<div class="brand"><div class="brand-mark">🌷</div><div class="brand-name">Woordschat</div></div>');
+      bar.appendChild(brand);
+    }
+    if(opts.right){ bar.appendChild(opts.right); }
+    app.appendChild(bar);
+  }
+
+  /* ============ HOME ============ */
+  function renderHome(app){
+    var li = levelInfo(DB.progress.xp);
+    topbar(app, { right: (function(){
+      var b = el('<button class="icon-btn" aria-label="Badges">🏅</button>');
+      b.onclick = function(){ view.screen="badges"; render(); };
+      return b;
+    })() });
+
+    var hero = el('<div class="hero-card"></div>');
+    hero.innerHTML =
+      '<div class="hero-greet">Hallo, '+escapeHtml(DB.settings.childName)+' !</div>'+
+      '<div class="hero-sub">'+li.level.emoji+' Niveau '+li.idx+' · '+escapeHtml(li.level.title)+' ('+escapeHtml(li.level.sub)+')</div>'+
+      '<div class="hero-stats">'+
+        '<div class="hero-stat"><div class="num">🔥 '+DB.progress.streak+'</div><div class="lbl">Jours de suite</div></div>'+
+        '<div class="hero-stat"><div class="num">⭐ '+DB.progress.xp+'</div><div class="lbl">Points XP</div></div>'+
+        '<div class="hero-stat"><div class="num">📗 '+masteredCount()+'</div><div class="lbl">Mots maîtrisés</div></div>'+
+      '</div>'+
+      '<div class="xp-track"><div class="xp-bar-bg"><div class="xp-bar-fill" style="width:'+li.pct+'%"></div></div>'+
+      '<div class="xp-lbl"><span>'+li.pct+'% vers le niveau '+(li.idx+1)+'</span>'+(li.next?('<span>'+li.next.emoji+'</span>'):'<span>Niveau max !</span>')+'</div></div>';
+    app.appendChild(hero);
+
+    app.appendChild(el('<div class="section-title">Choisis un mode</div>'));
+    var grid = el('<div class="mode-grid"></div>');
+    var modes = [
+      { cls:"m1", emoji:"🧠", title:"Entraînement", desc:"QCM, vrai/faux, écoute — mélangés", key:"entrainement" },
+      { cls:"m2", emoji:"🧩", title:"Association", desc:"Relie les mots FR et NL", key:"association" },
+      { cls:"m3", emoji:"⏱️", title:"Défi chrono", desc:"Le plus de bonnes réponses en 60s", key:"chrono" }
+    ];
+    modes.forEach(function(m){
+      var card = el('<button class="mode-card '+m.cls+'">'+
+        '<div class="mode-emoji">'+m.emoji+'</div>'+
+        '<div class="mode-text"><div class="mode-title">'+m.title+'</div><div class="mode-desc">'+m.desc+'</div></div>'+
+        '<div class="mode-chev">›</div></button>');
+      card.onclick = function(){ startMode(m.key); };
+      grid.appendChild(card);
+    });
+    app.appendChild(grid);
+
+    if(!view.data.selectedCats) view.data.selectedCats = [];
+    // prune any selected category that no longer exists (deleted by admin)
+    view.data.selectedCats = view.data.selectedCats.filter(function(id){
+      return DB.wordbank.categories.some(function(c){return c.id===id;});
+    });
+    if(DB.wordbank.categories.length>1){
+      app.appendChild(el('<div class="section-title">Catégories (touche-en plusieurs pour les combiner)</div>'));
+      var catScroll = el('<div class="cat-scroll"></div>');
+      var allActive = view.data.selectedCats.length===0;
+      var allChip = el('<button class="cat-chip'+(allActive?" active":"")+'">🗂️ Toutes</button>');
+      allChip.onclick = function(){ view.data.selectedCats=[]; render(); };
+      catScroll.appendChild(allChip);
+      DB.wordbank.categories.forEach(function(c){
+        var isActive = view.data.selectedCats.indexOf(c.id)!==-1;
+        var chip = el('<button class="cat-chip'+(isActive?" active":"")+'">'+c.emoji+' '+escapeHtml(c.name)+'</button>');
+        chip.onclick = function(){
+          var idx = view.data.selectedCats.indexOf(c.id);
+          if(idx===-1) view.data.selectedCats.push(c.id); else view.data.selectedCats.splice(idx,1);
+          render();
+        };
+        catScroll.appendChild(chip);
+      });
+      app.appendChild(catScroll);
+    }
+
+    var earnedBadges = BADGES.filter(function(b){return DB.progress.badges[b.id];});
+    if(earnedBadges.length){
+      app.appendChild(el('<div class="section-title">Tes badges</div>'));
+      var strip = el('<div class="badge-strip"></div>');
+      earnedBadges.slice(-6).reverse().forEach(function(b){
+        strip.appendChild(el('<div class="badge-chip"><div class="badge-circle earned">'+b.emoji+'</div><div class="b-name">'+escapeHtml(b.name)+'</div></div>'));
+      });
+      app.appendChild(strip);
+    }
+
+    var footer = el('<div class="footer-links"></div>');
+    var link = el('<button class="ghost-link">⚙️ Espace parent</button>');
+    link.onclick = function(){ view.screen="adminLogin"; view.data.pinBuffer=""; render(); };
+    footer.appendChild(link);
+    app.appendChild(footer);
+  }
+
+  function startMode(key){
+    var catId = (view.data.selectedCats && view.data.selectedCats.length) ? view.data.selectedCats.slice() : "all";
+    var pool = wordsInScope(catId);
+    if(!pool.length){ toast("Pas encore de mots dans cette ou ces catégories."); return; }
+    if(key==="association"){
+      view.screen="association";
+      view.data.assoc = setupAssociation(catId);
+      render();
+      return;
+    }
+    var length = key==="chrono" ? 999 : Math.min(10, Math.max(6, pool.length));
+    view.data.sessionMode = key;
+    view.data.session = {
+      mode:key, catId:catId,
+      queue: buildSessionQueue(key, catId, key==="chrono"?40:length),
+      index:0, correct:0, total:0, xpGained:0, answered:false,
+      timeLeft: key==="chrono" ? 60 : null,
+      startedAt: Date.now()
+    };
+    view.screen="session";
+    render();
+    if(key==="chrono") startChronoTimer();
+  }
+
+  var chronoInterval = null;
+  function startChronoTimer(){
+    if(chronoInterval) clearInterval(chronoInterval);
+    chronoInterval = setInterval(function(){
+      if(view.screen!=="session" || !view.data.session || view.data.session.mode!=="chrono"){
+        clearInterval(chronoInterval); return;
+      }
+      view.data.session.timeLeft -= 1;
+      var pill = document.querySelector(".timer-pill");
+      if(pill) pill.textContent = "⏱️ "+view.data.session.timeLeft+"s";
+      if(view.data.session.timeLeft<=0){
+        clearInterval(chronoInterval);
+        finishSession();
+      }
+    }, 1000);
+  }
+
+  /* ============ SESSION (entrainement / chrono) ============ */
+  function renderSession(app){
+    var s = view.data.session;
+    topbar(app, { back:function(){
+      if(chronoInterval) clearInterval(chronoInterval);
+      view.screen="home"; render();
+    }});
+    if(s.mode==="chrono" && s.index>=s.queue.length){
+      // regenerate more questions on the fly for chrono
+      var pool = wordsInScope(s.catId);
+      s.queue = s.queue.concat(buildSessionQueue("chrono", s.catId, 40));
+    }
+    var q = s.queue[s.index];
+    if(!q){ finishSession(); return; }
+
+    var row = el('<div class="progress-row"></div>');
+    if(s.mode==="chrono"){
+      row.appendChild(el('<div class="timer-pill">⏱️ '+s.timeLeft+'s</div>'));
+      row.appendChild(el('<div class="progress-count">'+s.correct+' ✓</div>'));
+    } else {
+      row.appendChild(el('<div class="progress-track"><div class="progress-fill" style="width:'+Math.round(s.index/s.queue.length*100)+'%"></div></div>'));
+      row.appendChild(el('<div class="progress-count">'+(s.index+1)+'/'+s.queue.length+'</div>'));
+    }
+    app.appendChild(row);
+
+    var card = el('<div class="q-card"></div>');
+    var kicker, prompt;
+    if(q.type==="ecoute"){
+      kicker = "Écoute et choisis le sens";
+      prompt = "🔊";
+    } else if(q.direction==="fr2nl"){
+      kicker = "Traduis en néerlandais"; prompt = q.word.fr;
+    } else {
+      kicker = "Traduis en français"; prompt = q.word.nl;
+    }
+    card.innerHTML = '<div class="q-kicker">'+kicker+'</div><div class="q-prompt">'+escapeHtml(prompt)+'</div>';
+    if(q.type==="ecoute"){
+      var btn = el('<button class="listen-btn">🔊 Réécouter</button>');
+      btn.onclick = function(){ speakNL(q.word.nl); };
+      card.appendChild(btn);
+      setTimeout(function(){ speakNL(q.word.nl); }, 250);
+    }
+    app.appendChild(card);
+
+    var body = el('<div></div>');
+    app.appendChild(body);
+
+    if(q.type==="qcm" || q.type==="ecoute"){
+      renderQcm(body, q, s);
+    } else if(q.type==="vf"){
+      renderVf(body, q, s);
+    } else if(q.type==="texte"){
+      renderTexte(body, q, s);
+    }
+  }
+
+  function afterAnswer(correct, xp, word){
+    var st = wordStat(word.id);
+    if(correct){ st.box = Math.min(5, st.box+1); st.correct++; DB.progress.totalCorrect++; }
+    else { st.box = Math.max(0, st.box-1); st.wrong++; }
+    var s = view.data.session;
+    s.total++;
+    if(correct){ s.correct++; s.xpGained += xp; DB.progress.xp += xp; }
+    saveState();
+  }
+
+  function nextQuestion(){
+    view.data.session.index++;
+    view.data.session.answered = false;
+    render();
+  }
+
+  function renderQcm(body, q, s){
+    var grid = el('<div class="opts-grid"></div>');
+    q.options.forEach(function(optText){
+      var btn = el('<button class="opt-btn">'+escapeHtml(optText)+'</button>');
+      btn.onclick = function(){
+        if(s.answered) return;
+        s.answered = true;
+        var isCorrect = optText===q.correct;
+        Array.prototype.forEach.call(grid.children, function(c){
+          if(c.textContent===q.correct) c.classList.add("correct");
+          c.classList.add("dim");
+        });
+        if(!isCorrect) btn.classList.add("wrong");
+        btn.classList.remove("dim");
+        afterAnswer(isCorrect, q.type==="ecoute"?12:10, q.word);
+        showContinue(body, isCorrect, isCorrect? null : pairText(q.word));
+      };
+      grid.appendChild(btn);
+    });
+    body.appendChild(grid);
+  }
+
+  function renderVf(body, q, s){
+    var card = el('<div class="q-card" style="padding:16px 18px;"></div>');
+    card.innerHTML = '<div class="q-kicker">Cette traduction est-elle correcte ?</div><div class="q-prompt" style="font-size:20px;">"'+escapeHtml(q.shown)+'"</div>';
+    body.appendChild(card);
+    var wrap = el('<div class="opts-vf"></div>');
+    var trueBtn = el('<button class="opt-vf-btn">✅ Vrai</button>');
+    var falseBtn = el('<button class="opt-vf-btn">❌ Faux</button>');
+    function answer(said){
+      if(s.answered) return;
+      s.answered = true;
+      var isCorrect = said===q.isTrue;
+      var trueCls = q.isTrue?"correct":(said===true?"wrong":"");
+      var falseCls = !q.isTrue?"correct":(said===false?"wrong":"");
+      if(trueCls) trueBtn.classList.add(trueCls);
+      if(falseCls) falseBtn.classList.add(falseCls);
+      afterAnswer(isCorrect, 10, q.word);
+      showContinue(body, isCorrect, isCorrect ? null : pairText(q.word));
+    }
+    trueBtn.onclick=function(){answer(true);};
+    falseBtn.onclick=function(){answer(false);};
+    wrap.appendChild(trueBtn); wrap.appendChild(falseBtn);
+    body.appendChild(wrap);
+  }
+
+  function renderTexte(body, q, s){
+    var wrap = el('<div class="text-input-row"></div>');
+    var input = el('<input class="text-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Écris ta réponse…">');
+    var hintBtn = el('<button class="btn btn-ghost">💡 Indice</button>');
+    var submitBtn = el('<button class="btn btn-primary">Valider</button>');
+    var usedHint = false;
+    var target = q.direction==="fr2nl" ? q.word.nl : q.word.fr;
+    hintBtn.onclick = function(){
+      usedHint = true;
+      input.value = target.slice(0, Math.min(target.length, input.value.length+1 || 1));
+      input.focus();
+    };
+    function submit(){
+      if(s.answered) return;
+      s.answered = true;
+      var candidates = [target].concat(q.direction==="fr2nl" ? (q.word.alt||[]) : []);
+      var isCorrect = candidates.some(function(c){return normalize(c)===normalize(input.value);});
+      input.classList.add(isCorrect?"correct":"wrong");
+      input.disabled = true;
+      afterAnswer(isCorrect, usedHint?8:15, q.word);
+      showContinue(body, isCorrect, isCorrect?null:pairText(q.word));
+    }
+    submitBtn.onclick = submit;
+    input.addEventListener("keydown", function(e){ if(e.key==="Enter") submit(); });
+    var row2 = el('<div class="row-2"></div>');
+    row2.appendChild(hintBtn); row2.appendChild(submitBtn);
+    wrap.appendChild(input); wrap.appendChild(row2);
+    body.appendChild(wrap);
+    setTimeout(function(){ input.focus(); }, 200);
+  }
+
+  function pairText(word){ return word.fr + " = " + word.nl; }
+
+  function showContinue(body, isCorrect, correctText){
+    var banner = el('<div class="feedback-banner '+(isCorrect?"ok":"ko")+'">'+
+      (isCorrect ? "✅ Bien joué !" : "❌ La bonne réponse était : "+escapeHtml(correctText||"")) +'</div>');
+    body.appendChild(banner);
+    var cont = el('<button class="btn btn-primary btn-block" style="margin-top:14px;">Continuer</button>');
+    cont.onclick = nextQuestion;
+    body.appendChild(cont);
+    cont.focus();
+  }
+
+  function finishSession(){
+    if(chronoInterval) clearInterval(chronoInterval);
+    var s = view.data.session;
+    DB.progress.modesUsed[s.mode] = true;
+    bumpStreak();
+    var perfect = s.total>0 && s.correct===s.total && s.total>=8;
+    if(perfect){ s.xpGained += 20; DB.progress.xp += 20; }
+    var durationSec = Math.max(1, Math.round((Date.now()-(s.startedAt||Date.now()))/1000));
+    logUsage(durationSec);
+    DB.progress.history.push({ date:todayStr(), at:DB.progress.lastActiveAt, mode:s.mode, correct:s.correct, total:s.total, xp:s.xpGained, durationSec:durationSec });
+    if(DB.progress.history.length>40) DB.progress.history.shift();
+    var newBadges = checkBadges();
+    saveState();
+    view.data.lastResult = { correct:s.correct, total:s.total, xp:s.xpGained, newBadges:newBadges, perfect:perfect };
+    view.screen = "summary";
+    render();
+  }
+
+  function renderSummary(app){
+    topbar(app, {});
+    var r = view.data.lastResult;
+    var pct = r.total ? Math.round(r.correct/r.total*100) : 0;
+    var emoji = pct===100 ? "🏆" : pct>=70 ? "🎉" : pct>=40 ? "💪" : "🌱";
+    var hero = el('<div class="summary-hero"></div>');
+    hero.innerHTML = '<div class="summary-emoji">'+emoji+'</div>'+
+      '<div class="summary-score">'+r.correct+' / '+r.total+'</div>'+
+      '<div class="summary-sub">'+pct+'% de bonnes réponses</div>'+
+      '<div class="xp-gain-pill">⭐ +'+r.xp+' XP'+(r.perfect?" · session parfaite !":"")+'</div>';
+    app.appendChild(hero);
+
+    if(r.newBadges.length){
+      app.appendChild(el('<div class="section-title" style="margin-top:22px;">Nouveaux badges 🎊</div>'));
+      var rowWrap = el('<div class="new-badge-row"></div>');
+      r.newBadges.forEach(function(b){
+        rowWrap.appendChild(el('<div class="new-badge-card"><div class="be">'+b.emoji+'</div><div><div class="bt">'+escapeHtml(b.name)+'</div><div class="bd">'+escapeHtml(b.desc)+'</div></div></div>'));
+      });
+      app.appendChild(rowWrap);
+    }
+
+    var again = el('<button class="btn btn-primary btn-block" style="margin-top:24px;">Rejouer</button>');
+    again.onclick = function(){ startMode(view.data.sessionMode); };
+    var home = el('<button class="btn btn-ghost btn-block" style="margin-top:10px;">Retour à l\'accueil</button>');
+    home.onclick = function(){ view.screen="home"; render(); };
+    app.appendChild(again); app.appendChild(home);
+  }
+
+  /* ============ ASSOCIATION MODE ============ */
+  function setupAssociation(catId){
+    var pool = shuffle(wordsInScope(catId)).slice(0, Math.min(6, wordsInScope(catId).length));
+    return {
+      words: pool,
+      left: shuffle(pool.map(function(w){return {id:w.id, text:w.fr};})),
+      right: shuffle(pool.map(function(w){return {id:w.id, text:w.nl};})),
+      matched:{}, selLeft:null, selRight:null, mistakes:0,
+      startedAt: Date.now()
+    };
+  }
+  function renderAssociation(app){
+    var a = view.data.assoc;
+    topbar(app, { back:function(){ view.screen="home"; render(); }});
+    app.appendChild(el('<div class="q-kicker" style="text-align:center;margin-bottom:14px;">Relie chaque mot français à sa traduction</div>'));
+    var grid = el('<div class="assoc-grid"></div>');
+    var colL = el('<div class="assoc-col"></div>');
+    var colR = el('<div class="assoc-col"></div>');
+    a.left.forEach(function(item){
+      var matched = a.matched[item.id];
+      var div = el('<div class="assoc-item'+(matched?" matched":"")+(a.selLeft===item.id?" selected":"")+'">'+escapeHtml(item.text)+'</div>');
+      if(!matched) div.onclick = function(){ selectAssoc("left", item.id); };
+      colL.appendChild(div);
+    });
+    a.right.forEach(function(item){
+      var matched = a.matched[item.id];
+      var div = el('<div class="assoc-item'+(matched?" matched":"")+(a.selRight===item.id?" selected":"")+'">'+escapeHtml(item.text)+'</div>');
+      if(!matched) div.onclick = function(){ selectAssoc("right", item.id); };
+      colR.appendChild(div);
+    });
+    grid.appendChild(colL); grid.appendChild(colR);
+    app.appendChild(grid);
+    var doneCount = Object.keys(a.matched).length;
+    app.appendChild(el('<div class="progress-track"><div class="progress-fill" style="width:'+Math.round(doneCount/a.words.length*100)+'%"></div></div>'));
+  }
+  function selectAssoc(side, id){
+    var a = view.data.assoc;
+    if(side==="left") a.selLeft = (a.selLeft===id)?null:id;
+    else a.selRight = (a.selRight===id)?null:id;
+    render();
+    if(a.selLeft && a.selRight){
+      var correct = a.selLeft === a.selRight;
+      if(correct){
+        a.matched[a.selLeft] = true;
+        var w = a.words.find(function(w){return w.id===a.selLeft;});
+        afterAnswerLite(true, w);
+        a.selLeft=null; a.selRight=null;
+        render();
+        if(Object.keys(a.matched).length===a.words.length){
+          setTimeout(finishAssociation, 400);
+        }
+      } else {
+        a.mistakes++;
+        afterAnswerLite(false, {id:a.selLeft});
+        setTimeout(function(){ a.selLeft=null; a.selRight=null; render(); }, 550);
+      }
+    }
+  }
+  function afterAnswerLite(correct, word){
+    if(word && word.id){
+      var st = wordStat(word.id);
+      if(correct){ st.box=Math.min(5, st.box+1); st.correct++; DB.progress.totalCorrect++; }
+      else { st.box=Math.max(0, st.box-1); st.wrong++; }
+    }
+  }
+  function finishAssociation(){
+    var a = view.data.assoc;
+    DB.progress.modesUsed.association = true;
+    bumpStreak();
+    var xp = Math.max(10, a.words.length*10 - a.mistakes*3);
+    DB.progress.xp += xp;
+    var durationSec = Math.max(1, Math.round((Date.now()-(a.startedAt||Date.now()))/1000));
+    logUsage(durationSec);
+    DB.progress.history.push({date:todayStr(), at:DB.progress.lastActiveAt, mode:"association", correct:a.words.length, total:a.words.length, xp:xp, durationSec:durationSec});
+    var newBadges = checkBadges();
+    saveState();
+    view.data.lastResult = { correct:a.words.length, total:a.words.length, xp:xp, newBadges:newBadges, perfect:a.mistakes===0 };
+    view.data.sessionMode = "association";
+    view.screen = "summary";
+    render();
+  }
+  function renderAssocResult(app){ renderSummary(app); }
+
+  /* ============ BADGES PAGE ============ */
+  function renderBadges(app){
+    topbar(app, { back:function(){ view.screen="home"; render(); }});
+    app.appendChild(el('<h2 style="margin-bottom:4px;">Tes badges</h2>'));
+    app.appendChild(el('<p style="color:var(--ink-soft);font-size:13px;margin-bottom:18px;">'+Object.keys(DB.progress.badges).length+' / '+BADGES.length+' débloqués</p>'));
+    var grid = el('<div class="badges-grid"></div>');
+    BADGES.forEach(function(b){
+      var earned = !!DB.progress.badges[b.id];
+      grid.appendChild(el('<div class="badge-tile"><div class="badge-circle '+(earned?"earned":"locked")+'">'+b.emoji+'</div><div class="b-name">'+escapeHtml(b.name)+'</div><div class="b-desc">'+escapeHtml(b.desc)+'</div></div>'));
+    });
+    app.appendChild(grid);
+  }
+
+  /* ============ ADMIN ============ */
+  function renderAdminLogin(app){
+    topbar(app, { back:function(){ view.screen="home"; render(); }});
+    app.appendChild(el('<h2 style="text-align:center;margin-top:10px;">Espace parent</h2>'));
+    app.appendChild(el('<p style="text-align:center;color:var(--ink-soft);font-size:13px;margin-top:6px;">Entre le code à 4 chiffres</p>'));
+    var buf = view.data.pinBuffer || "";
+    var dots = el('<div class="pin-dots"></div>');
+    for(var i=0;i<4;i++){ dots.appendChild(el('<div class="pin-dot'+(i<buf.length?" filled":"")+'"></div>')); }
+    app.appendChild(dots);
+    var pad = el('<div class="keypad"></div>');
+    ["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(function(k){
+      if(k===""){ pad.appendChild(el('<div></div>')); return; }
+      var b = el('<button class="key-btn">'+k+'</button>');
+      b.onclick = function(){
+        if(k==="⌫"){ view.data.pinBuffer = buf.slice(0,-1); render(); return; }
+        if(buf.length>=4) return;
+        view.data.pinBuffer = buf + k;
+        if(view.data.pinBuffer.length===4){
+          var entered = view.data.pinBuffer;
+          function wrongPin(){
+            toast("Code incorrect");
+            setTimeout(function(){ view.data.pinBuffer=""; render(); }, 400);
+          }
+          function enterAdmin(){
+            adminPin = entered;
+            view.data.pinBuffer="";
+            view.screen="admin"; view.data.adminTab="mots"; render();
+          }
+          apiPost("/api/admin/login", { pin: entered }).then(function(res){
+            if(res && res.ok) enterAdmin(); else wrongPin();
+          }).catch(function(){
+            // offline fallback so the parent isn't locked out without a connection
+            if(entered===DB.settings.pin){
+              enterAdmin();
+              toast("Mode hors-ligne : les changements ne seront pas synchronisés tant que la connexion n'est pas revenue");
+            } else { wrongPin(); }
+          });
+        }
+        render();
+      };
+      pad.appendChild(b);
+    });
+    app.appendChild(pad);
+    app.appendChild(el('<p style="text-align:center;color:var(--ink-faint);font-size:11.5px;margin-top:18px;">Code par défaut : 1234 (modifiable dans l\'espace parent)</p>'));
+  }
+
+  function renderAdmin(app){
+    topbar(app, { back:function(){ view.screen="home"; render(); }});
+    app.appendChild(el('<h2 style="margin-bottom:14px;">Espace parent</h2>'));
+
+    var statGrid = el('<div class="stat-grid"></div>');
+    statGrid.appendChild(el('<div class="stat-box"><div class="n">'+DB.wordbank.words.length+'</div><div class="l">Mots dans la liste</div></div>'));
+    statGrid.appendChild(el('<div class="stat-box"><div class="n">'+DB.wordbank.categories.length+'</div><div class="l">Catégories</div></div>'));
+    app.appendChild(statGrid);
+
+    var tabs = el('<div class="tabs"></div>');
+    [["mots","📝 Mots"],["categories","🗂️ Catégories"],["stats","📊 Stats"],["reglages","⚙️ Réglages"]].forEach(function(t){
+      var b = el('<button class="tab-btn'+(view.data.adminTab===t[0]?" active":"")+'">'+t[1]+'</button>');
+      b.onclick = function(){ view.data.adminTab=t[0]; render(); };
+      tabs.appendChild(b);
+    });
+    app.appendChild(tabs);
+
+    if(view.data.adminTab==="categories") return renderAdminCategories(app);
+    if(view.data.adminTab==="stats") return renderAdminStats(app);
+    if(view.data.adminTab==="reglages") return renderAdminSettings(app);
+    return renderAdminWords(app);
+  }
+
+  function renderAdminWords(app){
+    var editingId = view.data.editingWordId || null;
+    var editingWord = editingId ? DB.wordbank.words.find(function(w){return w.id===editingId;}) : null;
+    if(editingId && !editingWord) editingId = null; // word was deleted meanwhile
+
+    var card = el('<div class="card"></div>');
+    card.appendChild(el('<div class="field-label">'+(editingWord ? "Modifier le mot" : "Ajouter un mot")+'</div>'));
+    var catOpts = DB.wordbank.categories.map(function(c){
+      var sel = editingWord && editingWord.category===c.id ? " selected" : "";
+      return '<option value="'+c.id+'"'+sel+'>'+escapeHtml(c.emoji+" "+c.name)+'</option>';
+    }).join("");
+    card.innerHTML += '<div class="field"><label class="field-label">Catégorie</label><select id="new-cat">'+catOpts+'</select></div>'+
+      '<div class="field"><label class="field-label">Français</label><input id="new-fr" type="text" placeholder="ex : Merci" value="'+(editingWord?escapeHtml(editingWord.fr):"")+'"></div>'+
+      '<div class="field"><label class="field-label">Néerlandais</label><input id="new-nl" type="text" placeholder="ex : Dank je wel" value="'+(editingWord?escapeHtml(editingWord.nl):"")+'"></div>'+
+      '<div class="field"><label class="field-label">Autres réponses acceptées (optionnel, séparées par des virgules)</label><input id="new-alt" type="text" placeholder="ex : Bedankt, Dank u" value="'+(editingWord && editingWord.alt?escapeHtml(editingWord.alt.join(", ")):"")+'"></div>';
+    var btnRow = el('<div class="row-2"></div>');
+    var saveBtn = el('<button class="btn btn-dark" style="flex:1;">'+(editingWord ? "Enregistrer les modifications" : "Ajouter le mot")+'</button>');
+    saveBtn.onclick = function(){
+      var fr = $("new-fr").value.trim(), nl = $("new-nl").value.trim();
+      var cat = $("new-cat").value;
+      if(!fr || !nl){ toast("Complète le français et le néerlandais"); return; }
+      var altRaw = $("new-alt").value.trim();
+      var alt = altRaw ? altRaw.split(",").map(function(s){return s.trim();}).filter(Boolean) : [];
+      if(editingWord){
+        editingWord.fr = fr; editingWord.nl = nl; editingWord.category = cat; editingWord.alt = alt;
+        toast("Mot modifié ✓");
+        view.data.editingWordId = null;
+      } else {
+        var id = "w_"+Date.now()+"_"+Math.floor(Math.random()*999);
+        DB.wordbank.words.push({ id:id, category:cat, fr:fr, nl:nl, alt:alt });
+        toast("Mot ajouté ✓");
+      }
+      saveState();
+      pushWordbank();
+      render();
+    };
+    btnRow.appendChild(saveBtn);
+    if(editingWord){
+      var cancelBtn = el('<button class="btn btn-ghost">Annuler</button>');
+      cancelBtn.onclick = function(){ view.data.editingWordId = null; render(); };
+      btnRow.appendChild(cancelBtn);
+    }
+    card.appendChild(btnRow);
+    app.appendChild(card);
+
+    var listCard = el('<div class="card"></div>');
+    listCard.appendChild(el('<div class="field-label">Liste des mots ('+DB.wordbank.words.length+')</div>'));
+    if(!DB.wordbank.words.length){
+      listCard.appendChild(el('<p style="color:var(--ink-faint);font-size:13px;">Aucun mot pour l\'instant.</p>'));
+    }
+    DB.wordbank.words.slice().reverse().forEach(function(w){
+      var row = el('<div class="word-row"></div>');
+      row.innerHTML = '<div class="wtext"><div class="wfr">'+escapeHtml(w.fr)+'</div><div class="wnl">'+escapeHtml(w.nl)+'</div><div class="wcat">'+escapeHtml(categoryEmoji(w.category)+" "+categoryName(w.category))+'</div></div>';
+      var actions = el('<div class="row-actions"></div>');
+      var editBtn = el('<button class="icon-sm" aria-label="Modifier">✏️</button>');
+      editBtn.onclick = function(){
+        view.data.editingWordId = w.id;
+        render();
+      };
+      var delBtn = el('<button class="icon-sm" aria-label="Supprimer">🗑️</button>');
+      delBtn.onclick = function(){
+        DB.wordbank.words = DB.wordbank.words.filter(function(x){return x.id!==w.id;});
+        delete DB.progress.wordStats[w.id];
+        if(view.data.editingWordId===w.id) view.data.editingWordId=null;
+        saveState(); pushWordbank(); render();
+      };
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      row.appendChild(actions);
+      listCard.appendChild(row);
+    });
+    app.appendChild(listCard);
+  }
+
+  function buildHeatCells(numDays){
+    var today = new Date(); today.setHours(0,0,0,0);
+    var start = new Date(today); start.setDate(start.getDate() - (numDays-1));
+    var startDow = (start.getDay()+6)%7; // 0=lundi..6=dimanche
+    var cells = [];
+    for(var i=0;i<startDow;i++){ cells.push(null); }
+    for(var i=0;i<numDays;i++){
+      var d = new Date(start); d.setDate(start.getDate()+i);
+      cells.push(d);
+    }
+    return cells;
+  }
+  function heatColorFor(seconds){
+    if(!seconds) return "var(--surface-2)";
+    if(seconds<300) return "var(--orange-tint)";
+    if(seconds<900) return "var(--orange)";
+    return "var(--orange-deep)";
+  }
+  function dayKey(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+
+  function renderAdminStats(app){
+    var p = DB.progress;
+
+    var grid = el('<div class="stat-grid"></div>');
+    grid.appendChild(el('<div class="stat-box"><div class="n">'+formatDuration(p.totalTimeSec)+'</div><div class="l">Temps total</div></div>'));
+    grid.appendChild(el('<div class="stat-box"><div class="n">'+p.sessionsCount+'</div><div class="l">Sessions faites</div></div>'));
+    grid.appendChild(el('<div class="stat-box"><div class="n">'+p.streak+' 🔥</div><div class="l">Série actuelle</div></div>'));
+    grid.appendChild(el('<div class="stat-box"><div class="n">'+(p.bestStreak||p.streak||0)+'</div><div class="l">Meilleure série</div></div>'));
+    grid.appendChild(el('<div class="stat-box"><div class="n">'+masteredCount()+'</div><div class="l">Mots maîtrisés</div></div>'));
+    grid.appendChild(el('<div class="stat-box"><div class="n" style="font-size:14.5px;">'+escapeHtml(formatWhen(p.lastActiveAt))+'</div><div class="l">Dernière activité</div></div>'));
+    app.appendChild(grid);
+
+    var heatCard = el('<div class="card"></div>');
+    heatCard.appendChild(el('<div class="field-label">Activité (12 dernières semaines) — touche un carré pour le détail</div>'));
+    var wrap = el('<div class="heat-wrap"></div>');
+    var gridEl = el('<div class="heat-grid"></div>');
+    buildHeatCells(84).forEach(function(d){
+      if(!d){ gridEl.appendChild(el('<div class="heat-cell" style="background:transparent;cursor:default;"></div>')); return; }
+      var rec = p.dailyLog[dayKey(d)];
+      var seconds = rec ? rec.seconds : 0;
+      var cell = el('<div class="heat-cell"></div>');
+      cell.style.background = heatColorFor(seconds);
+      var label = d.toLocaleDateString("fr-BE", {weekday:"long", day:"numeric", month:"long"});
+      var detail = seconds ? (formatDuration(seconds)+" · "+rec.sessions+" session"+(rec.sessions>1?"s":"")) : "pas de session";
+      cell.title = label+" — "+detail;
+      cell.onclick = function(){ toast(label+" : "+detail); };
+      gridEl.appendChild(cell);
+    });
+    wrap.appendChild(gridEl);
+    heatCard.appendChild(wrap);
+    var legend = el('<div class="heat-legend"></div>');
+    legend.innerHTML = '<span>Moins</span>'+
+      '<div class="heat-cell" style="background:var(--surface-2);"></div>'+
+      '<div class="heat-cell" style="background:var(--orange-tint);"></div>'+
+      '<div class="heat-cell" style="background:var(--orange);"></div>'+
+      '<div class="heat-cell" style="background:var(--orange-deep);"></div>'+
+      '<span>Plus</span>';
+    heatCard.appendChild(legend);
+    app.appendChild(heatCard);
+
+    var listCard = el('<div class="card"></div>');
+    listCard.appendChild(el('<div class="field-label">Dernières sessions</div>'));
+    var recent = DB.progress.history.slice().reverse().slice(0,10);
+    if(!recent.length){
+      listCard.appendChild(el('<p style="color:var(--ink-faint);font-size:13px;">Aucune session pour l\'instant.</p>'));
+    }
+    var list = el('<div class="session-list"></div>');
+    recent.forEach(function(h){
+      var label = MODE_LABELS[h.mode] || h.mode;
+      var emoji = label.split(" ")[0];
+      var name = label.slice(emoji.length+1);
+      var row = el('<div class="session-row"></div>');
+      row.innerHTML = '<div class="se">'+emoji+'</div>'+
+        '<div class="sm"><div class="st">'+escapeHtml(name)+' · '+escapeHtml(formatWhen(h.at || h.date))+'</div>'+
+        '<div class="sd">'+h.correct+'/'+h.total+' bonnes réponses'+(h.durationSec?(' · '+formatDuration(h.durationSec)):'')+'</div></div>'+
+        '<div class="sr">+'+h.xp+' XP</div>';
+      list.appendChild(row);
+    });
+    listCard.appendChild(list);
+    app.appendChild(listCard);
+  }
+
+  function renderAdminCategories(app){
+    var card = el('<div class="card"></div>');
+    card.appendChild(el('<div class="field-label">Ajouter une catégorie</div>'));
+    card.innerHTML += '<div class="field"><label class="field-label">Nom</label><input id="new-cat-name" type="text" placeholder="ex : La nourriture"></div>'+
+      '<div class="field"><label class="field-label">Emoji</label><input id="new-cat-emoji" type="text" placeholder="🍎" maxlength="4"></div>';
+    var addBtn = el('<button class="btn btn-dark btn-block">Ajouter la catégorie</button>');
+    addBtn.onclick = function(){
+      var name = $("new-cat-name").value.trim();
+      var emoji = $("new-cat-emoji").value.trim() || "🔤";
+      if(!name){ toast("Donne un nom à la catégorie"); return; }
+      var id = "cat_"+Date.now();
+      DB.wordbank.categories.push({id:id, name:name, emoji:emoji});
+      saveState(); pushWordbank(); toast("Catégorie ajoutée ✓"); render();
+    };
+    card.appendChild(addBtn);
+    app.appendChild(card);
+
+    var listCard = el('<div class="card"></div>');
+    listCard.appendChild(el('<div class="field-label">Catégories existantes</div>'));
+    DB.wordbank.categories.forEach(function(c){
+      var count = DB.wordbank.words.filter(function(w){return w.category===c.id;}).length;
+      var row = el('<div class="word-row"></div>');
+      row.innerHTML = '<div class="wtext"><div class="wfr">'+c.emoji+' '+escapeHtml(c.name)+'</div><div class="wnl">'+count+' mot(s)</div></div>';
+      var actions = el('<div class="row-actions"></div>');
+      var delBtn = el('<button class="icon-sm" aria-label="Supprimer">🗑️</button>');
+      delBtn.onclick = function(){
+        if(count>0){ toast("Supprime ou déplace d'abord les mots de cette catégorie"); return; }
+        DB.wordbank.categories = DB.wordbank.categories.filter(function(x){return x.id!==c.id;});
+        saveState(); pushWordbank(); render();
+      };
+      actions.appendChild(delBtn);
+      row.appendChild(actions);
+      listCard.appendChild(row);
+    });
+    app.appendChild(listCard);
+  }
+
+  function renderAdminSettings(app){
+    var card = el('<div class="card"></div>');
+    card.appendChild(el('<div class="field-label">Prénom de l\'enfant</div>'));
+    var nameInput = el('<input type="text" value="'+escapeHtml(DB.settings.childName)+'">');
+    nameInput.style.cssText = "width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink);font-size:15px;margin-bottom:14px;";
+    card.appendChild(nameInput);
+    card.appendChild(el('<div class="field-label">Nouveau code parent (4 chiffres)</div>'));
+    var pinInput = el('<input type="text" inputmode="numeric" maxlength="4" placeholder="'+DB.settings.pin+'">');
+    pinInput.style.cssText = nameInput.style.cssText;
+    card.appendChild(pinInput);
+    var saveBtn = el('<button class="btn btn-dark btn-block">Enregistrer</button>');
+    saveBtn.onclick = function(){
+      DB.settings.childName = nameInput.value.trim() || DB.settings.childName;
+      if(/^\d{4}$/.test(pinInput.value.trim())) DB.settings.pin = pinInput.value.trim();
+      saveState(); pushSettings(); toast("Réglages enregistrés ✓"); render();
+    };
+    card.appendChild(saveBtn);
+    app.appendChild(card);
+
+    var resetCard = el('<div class="card"></div>');
+    resetCard.appendChild(el('<div class="field-label">Progrès de l\'enfant</div>'));
+    resetCard.appendChild(el('<p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px;">Les points, badges et séries sont partagés entre tous les appareils. Pour repartir de zéro :</p>'));
+    var resetBtn = el('<button class="btn btn-ghost btn-block">Réinitialiser les progrès</button>');
+    resetBtn.onclick = function(){
+      if(!confirm("Réinitialiser tous les points, badges et l'historique ?")) return;
+      DB.progress = { xp:0, streak:0, bestStreak:0, lastActiveDate:null, lastActiveAt:null, wordStats:{}, badges:{}, modesUsed:{}, totalCorrect:0, totalTimeSec:0, sessionsCount:0, history:[], dailyLog:{} };
+      saveState(); toast("Progrès réinitialisés"); render();
+    };
+    resetCard.appendChild(resetBtn);
+    app.appendChild(resetCard);
+
+    var syncCard = el('<div class="card"></div>');
+    syncCard.appendChild(el('<div class="field-label">Synchronisation entre appareils</div>'));
+    var statusText;
+    if(lastSyncOk===null) statusText = "⏳ Synchronisation en cours…";
+    else if(lastSyncOk) statusText = "🟢 Connecté au serveur — synchronisé "+formatWhen(new Date(lastSyncAt).toISOString());
+    else statusText = "🔴 Hors ligne — les changements seront envoyés dès que la connexion revient"+(lastSyncAt?(" (dernière synchro : "+formatWhen(new Date(lastSyncAt).toISOString())+")"):"");
+    syncCard.appendChild(el('<p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:10px;">'+statusText+' Les mots, catégories et progrès sont partagés automatiquement avec tous les appareils qui utilisent l\'application.</p>'));
+    var syncBtn = el('<button class="btn btn-ghost btn-block">🔄 Forcer la synchronisation</button>');
+    syncBtn.onclick = function(){
+      toast("Synchronisation…");
+      syncFromServer().then(function(){ toast(lastSyncOk ? "Synchronisé ✓" : "Échec — vérifie la connexion au serveur"); render(); });
+    };
+    syncCard.appendChild(syncBtn);
+    app.appendChild(syncCard);
+  }
+
+  /* ============ BOOT ============ */
+  render();
+  syncFromServer();
+  setInterval(syncFromServer, 25000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) syncFromServer(); });
+  window.addEventListener("focus", syncFromServer);
+})();
+</script>

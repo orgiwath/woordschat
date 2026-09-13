@@ -1,0 +1,17 @@
+{
+  "name": "woordschat-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Woordschat - app de revision de neerlandais pour Charlie, avec synchronisation multi-appareils",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1",
+    "playwright": "^1.63.0"
+  }
+}
