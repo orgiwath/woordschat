@@ -327,12 +327,6 @@
   .q-kicker{font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:10px;}
   .q-prompt{font-family:var(--font-display);font-size:25px;font-weight:700;color:var(--ink);text-wrap:balance;}
   .q-flag{font-size:26px;margin-bottom:6px;display:block;}
-  .listen-btn{
-    margin-top:16px;
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--delft-tint);color:var(--delft);
-    border:none;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;cursor:pointer;
-  }
 
   .opts-grid{display:grid;grid-template-columns:1fr;gap:10px;}
   .opt-btn{
@@ -531,7 +525,7 @@
   ];
 
   var MODE_TYPES = {
-    entrainement: ["qcm","vf","texte","ecoute"],
+    entrainement: ["qcm","vf","texte"],
     chrono: ["qcm","vf"]
   };
 
@@ -746,33 +740,6 @@
     setTimeout(function(){ t.remove(); }, 2200);
   }
 
-  /* ============ SPEECH ============ */
-  var voicesReady = false, nlVoice = null;
-  function primeVoices(){
-    if(!("speechSynthesis" in window)) return;
-    var vs = speechSynthesis.getVoices();
-    if(vs && vs.length){
-      nlVoice = vs.find(function(v){return v.lang && v.lang.toLowerCase().indexOf("nl")===0;}) || null;
-      voicesReady = true;
-    }
-  }
-  if("speechSynthesis" in window){
-    primeVoices();
-    speechSynthesis.onvoiceschanged = primeVoices;
-  }
-  function speakNL(text){
-    if(!("speechSynthesis" in window)) return false;
-    try{
-      speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = "nl-NL";
-      if(nlVoice) u.voice = nlVoice;
-      u.rate = 0.88;
-      speechSynthesis.speak(u);
-      return true;
-    }catch(e){ return false; }
-  }
-
   /* ============ BADGE / STREAK / LEVEL LOGIC ============ */
   function masteredCount(){
     var n=0;
@@ -861,18 +828,16 @@
   function makeQuestion(word, pool, allowedTypes){
     var direction = Math.random()<0.5 ? "fr2nl" : "nl2fr";
     var type = pick(allowedTypes);
-    if(type==="ecoute" && !("speechSynthesis" in window)) type="qcm";
-    if(type==="ecoute") direction = "fr2nl"; // always listen to NL, answer meaning
     var q = { word:word, direction:direction, type:type };
-    if(type==="qcm" || type==="ecoute"){
-      var distractors = buildDistractors(word, type==="ecoute" ? "nl2fr" : direction, pool, 3);
+    if(type==="qcm"){
+      var distractors = buildDistractors(word, direction, pool, 3);
       while(distractors.length<3 && pool.length>1){
         var extra = pick(pool);
-        var val = type==="ecoute" ? extra.fr : (direction==="fr2nl"?extra.nl:extra.fr);
-        if(distractors.indexOf(val)===-1 && val!==(type==="ecoute"?word.fr:(direction==="fr2nl"?word.nl:word.fr))) distractors.push(val);
+        var val = direction==="fr2nl" ? extra.nl : extra.fr;
+        if(distractors.indexOf(val)===-1 && val!==(direction==="fr2nl"?word.nl:word.fr)) distractors.push(val);
         else break;
       }
-      var correctVal = type==="ecoute" ? word.fr : (direction==="fr2nl" ? word.nl : word.fr);
+      var correctVal = direction==="fr2nl" ? word.nl : word.fr;
       q.options = shuffle(distractors.concat([correctVal]));
       q.correct = correctVal;
     } else if(type==="vf"){
@@ -950,7 +915,7 @@
     app.appendChild(el('<div class="section-title">Choisis un mode</div>'));
     var grid = el('<div class="mode-grid"></div>');
     var modes = [
-      { cls:"m1", emoji:"🧠", title:"Entraînement", desc:"QCM, vrai/faux, écoute — mélangés", key:"entrainement" },
+      { cls:"m1", emoji:"🧠", title:"Entraînement", desc:"QCM, vrai/faux, texte à trous — mélangés", key:"entrainement" },
       { cls:"m2", emoji:"🧩", title:"Association", desc:"Relie les mots FR et NL", key:"association" },
       { cls:"m3", emoji:"⏱️", title:"Défi chrono", desc:"Le plus de bonnes réponses en 60s", key:"chrono" }
     ];
@@ -1074,27 +1039,18 @@
 
     var card = el('<div class="q-card"></div>');
     var kicker, prompt;
-    if(q.type==="ecoute"){
-      kicker = "Écoute et choisis le sens";
-      prompt = "🔊";
-    } else if(q.direction==="fr2nl"){
+    if(q.direction==="fr2nl"){
       kicker = "Traduis en néerlandais"; prompt = q.word.fr;
     } else {
       kicker = "Traduis en français"; prompt = q.word.nl;
     }
     card.innerHTML = '<div class="q-kicker">'+kicker+'</div><div class="q-prompt">'+escapeHtml(prompt)+'</div>';
-    if(q.type==="ecoute"){
-      var btn = el('<button class="listen-btn">🔊 Réécouter</button>');
-      btn.onclick = function(){ speakNL(q.word.nl); };
-      card.appendChild(btn);
-      setTimeout(function(){ speakNL(q.word.nl); }, 250);
-    }
     app.appendChild(card);
 
     var body = el('<div></div>');
     app.appendChild(body);
 
-    if(q.type==="qcm" || q.type==="ecoute"){
+    if(q.type==="qcm"){
       renderQcm(body, q, s);
     } else if(q.type==="vf"){
       renderVf(body, q, s);
@@ -1133,7 +1089,7 @@
         });
         if(!isCorrect) btn.classList.add("wrong");
         btn.classList.remove("dim");
-        afterAnswer(isCorrect, q.type==="ecoute"?12:10, q.word);
+        afterAnswer(isCorrect, 10, q.word);
         showContinue(body, isCorrect, isCorrect? null : pairText(q.word));
       };
       grid.appendChild(btn);
