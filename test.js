@@ -34,11 +34,20 @@ const html = fs.readFileSync("public/index.html", "utf8");
   console.log("brand:", q(".brand-name") && q(".brand-name").textContent);
   console.log("mode cards:", qa(".mode-card").length);
 
+  // Question-count selector: pick "5" and confirm the entrainement session actually uses it
+  const lenChips = qa(".len-chip");
+  console.log("question-count chips:", lenChips.map((c) => c.textContent.trim()));
+  const chip5 = lenChips.find((c) => c.textContent.trim() === "5");
+  click(chip5);
+  await new Promise((r) => setTimeout(r, 20));
+  console.log("chip 5 active after click:", qa(".len-chip").find((c) => c.textContent.trim() === "5").classList.contains("active"));
+
   // Start "Entrainement"
   console.log("== START ENTRAINEMENT ==");
   click(qa(".mode-card")[0]);
   await new Promise((r) => setTimeout(r, 50));
   console.log("screen has q-card:", !!q(".q-card"));
+  console.log("progress-count shows /5 as chosen:", q(".progress-count") && q(".progress-count").textContent);
 
   // Answer several questions regardless of type
   for (let i = 0; i < 12; i++) {
@@ -80,7 +89,14 @@ const html = fs.readFileSync("public/index.html", "utf8");
     "Je vais bien": "Het gaat goed", "Je ne vais pas bien": "Het gaat niet goed",
     "Comment t'appelles-tu ?": "Hoe heet je?", "Je m'appelle Charlie": "Ik heet Charlie",
     "Quel âge as-tu ?": "Hoe oud ben je?", "J'ai treize ans": "Ik ben dertien jaar",
-    "Où habites-tu ?": "Waar woon je?", "J'habite à Sydney": "Ik woon in Sydney"
+    "Où habites-tu ?": "Waar woon je?", "J'habite à Sydney": "Ik woon in Sydney",
+    "Zéro": "Nul", "Un": "Een", "Deux": "Twee", "Trois": "Drie", "Quatre": "Vier",
+    "Cinq": "Vijf", "Six": "Zes", "Sept": "Zeven", "Huit": "Acht", "Neuf": "Negen",
+    "Dix": "Tien", "Onze": "Elf", "Douze": "Twaalf", "Treize": "Dertien", "Quatorze": "Veertien",
+    "Quinze": "Vijftien", "Seize": "Zestien", "Dix-sept": "Zeventien", "Dix-huit": "Achttien",
+    "Dix-neuf": "Negentien", "Vingt": "Twintig",
+    "Lundi": "Maandag", "Mardi": "Dinsdag", "Mercredi": "Woensdag", "Jeudi": "Donderdag",
+    "Vendredi": "Vrijdag", "Samedi": "Zaterdag", "Dimanche": "Zondag"
   };
   click(qa(".mode-card")[1]);
   await new Promise((r) => setTimeout(r, 20));
@@ -189,11 +205,12 @@ const html = fs.readFileSync("public/index.html", "utf8");
   const catTab2 = qa(".tab-btn").find((b) => b.textContent.includes("Catégories"));
   click(catTab2);
   await new Promise((r) => setTimeout(r, 20));
+  const catCountBefore = JSON.parse(window.localStorage.getItem("woordschat_v1")).wordbank.categories.length;
   const delCatBtn = qa(".icon-sm")[0];
   click(delCatBtn);
   await new Promise((r) => setTimeout(r, 20));
   const dbAfterCatDel = JSON.parse(window.localStorage.getItem("woordschat_v1"));
-  console.log("category still present after blocked delete:", dbAfterCatDel.wordbank.categories.length === 1);
+  console.log("category still present after blocked delete:", dbAfterCatDel.wordbank.categories.length === catCountBefore);
 
   // Sync status card on settings tab (replaces the old manual export/import blob)
   const setTab2 = qa(".tab-btn").find((b) => b.textContent.includes("Réglages"));

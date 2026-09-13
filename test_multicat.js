@@ -14,11 +14,14 @@ const html = fs.readFileSync("public/index.html", "utf8");
   function click(el) { el.dispatchEvent(new window.MouseEvent("click", { bubbles: true })); }
   function q(sel) { return doc.querySelector(sel); }
   function qa(sel) { return Array.from(doc.querySelectorAll(sel)); }
+  // category chips only (the question-count chips share the .cat-chip look via
+  // an extra .len-chip class, so exclude those here)
+  function catChips() { return qa(".cat-chip").filter((c) => !c.classList.contains("len-chip")); }
 
-  // With only 1 seed category, the category picker should be hidden entirely
-  console.log("category picker hidden with 1 category:", !q(".cat-scroll"));
+  // The seed data now ships 3 categories, so the picker should already be visible
+  console.log("category picker visible with seed categories:", !!q(".cat-scroll"), "chip count:", catChips().length);
 
-  // Add a 2nd category via admin, then verify the picker appears and multi-select works
+  // Add a 4th category via admin, then verify multi-select still works
   const parentLink = qa("button").find((b) => b.textContent.includes("Espace parent"));
   click(parentLink);
   await new Promise((r) => setTimeout(r, 20));
@@ -47,9 +50,9 @@ const html = fs.readFileSync("public/index.html", "utf8");
   click(backBtn);
   await new Promise((r) => setTimeout(r, 20));
 
-  console.log("category picker visible with 2 categories:", !!q(".cat-scroll"));
-  const chips = qa(".cat-chip");
-  console.log("chip count (Toutes + 2 cats):", chips.length, chips.map((c) => c.textContent.trim()));
+  console.log("category picker visible with 4 categories:", !!q(".cat-scroll"));
+  const chips = catChips();
+  console.log("chip count (Toutes + 4 cats):", chips.length, chips.map((c) => c.textContent.trim()));
 
   // select just "Faire connaissance" then also toggle "La nourriture" -> both active, "Toutes" inactive
   const chipConnaissance = chips.find((c) => c.textContent.includes("connaissance"));
@@ -59,13 +62,13 @@ const html = fs.readFileSync("public/index.html", "utf8");
   await new Promise((r) => setTimeout(r, 10));
   click(chipNourriture);
   await new Promise((r) => setTimeout(r, 10));
-  const chips2 = qa(".cat-chip");
+  const chips2 = catChips();
   console.log("after selecting both: toutes active?", chips2.find((c) => c.textContent.includes("Toutes")).classList.contains("active"),
     "connaissance active?", chips2.find((c) => c.textContent.includes("connaissance")).classList.contains("active"),
     "nourriture active?", chips2.find((c) => c.textContent.includes("nourriture")).classList.contains("active"));
 
   // start a session scoped to just "La nourriture" (deselect connaissance first)
-  click(qa(".cat-chip").find((c) => c.textContent.includes("connaissance")));
+  click(catChips().find((c) => c.textContent.includes("connaissance")));
   await new Promise((r) => setTimeout(r, 10));
   click(qa(".mode-card")[0]);
   await new Promise((r) => setTimeout(r, 20));

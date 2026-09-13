@@ -31,7 +31,9 @@ const DEFAULT_PIN = "1234";
    new deployment isn't empty on first boot. */
 const SEED_WORDBANK = {
   categories: [
-    { id: "kennismaking", name: "Faire connaissance", emoji: "👋" }
+    { id: "kennismaking", name: "Faire connaissance", emoji: "👋" },
+    { id: "nombres", name: "Les nombres (0-20)", emoji: "🔢" },
+    { id: "jours", name: "Les jours de la semaine", emoji: "📅" }
   ],
   words: [
     { id: "w1", category: "kennismaking", fr: "Bonjour", nl: "Hallo", alt: ["Dag", "Goedendag"] },
@@ -44,7 +46,35 @@ const SEED_WORDBANK = {
     { id: "w8", category: "kennismaking", fr: "Quel âge as-tu ?", nl: "Hoe oud ben je?", alt: [] },
     { id: "w9", category: "kennismaking", fr: "J'ai treize ans", nl: "Ik ben dertien jaar", alt: ["Ik ben dertien jaar oud"] },
     { id: "w10", category: "kennismaking", fr: "Où habites-tu ?", nl: "Waar woon je?", alt: [] },
-    { id: "w11", category: "kennismaking", fr: "J'habite à Sydney", nl: "Ik woon in Sydney", alt: [] }
+    { id: "w11", category: "kennismaking", fr: "J'habite à Sydney", nl: "Ik woon in Sydney", alt: [] },
+    { id: "n0", category: "nombres", fr: "Zéro", nl: "Nul", alt: [] },
+    { id: "n1", category: "nombres", fr: "Un", nl: "Een", alt: [] },
+    { id: "n2", category: "nombres", fr: "Deux", nl: "Twee", alt: [] },
+    { id: "n3", category: "nombres", fr: "Trois", nl: "Drie", alt: [] },
+    { id: "n4", category: "nombres", fr: "Quatre", nl: "Vier", alt: [] },
+    { id: "n5", category: "nombres", fr: "Cinq", nl: "Vijf", alt: [] },
+    { id: "n6", category: "nombres", fr: "Six", nl: "Zes", alt: [] },
+    { id: "n7", category: "nombres", fr: "Sept", nl: "Zeven", alt: [] },
+    { id: "n8", category: "nombres", fr: "Huit", nl: "Acht", alt: [] },
+    { id: "n9", category: "nombres", fr: "Neuf", nl: "Negen", alt: [] },
+    { id: "n10", category: "nombres", fr: "Dix", nl: "Tien", alt: [] },
+    { id: "n11", category: "nombres", fr: "Onze", nl: "Elf", alt: [] },
+    { id: "n12", category: "nombres", fr: "Douze", nl: "Twaalf", alt: [] },
+    { id: "n13", category: "nombres", fr: "Treize", nl: "Dertien", alt: [] },
+    { id: "n14", category: "nombres", fr: "Quatorze", nl: "Veertien", alt: [] },
+    { id: "n15", category: "nombres", fr: "Quinze", nl: "Vijftien", alt: [] },
+    { id: "n16", category: "nombres", fr: "Seize", nl: "Zestien", alt: [] },
+    { id: "n17", category: "nombres", fr: "Dix-sept", nl: "Zeventien", alt: [] },
+    { id: "n18", category: "nombres", fr: "Dix-huit", nl: "Achttien", alt: [] },
+    { id: "n19", category: "nombres", fr: "Dix-neuf", nl: "Negentien", alt: [] },
+    { id: "n20", category: "nombres", fr: "Vingt", nl: "Twintig", alt: [] },
+    { id: "j1", category: "jours", fr: "Lundi", nl: "Maandag", alt: [] },
+    { id: "j2", category: "jours", fr: "Mardi", nl: "Dinsdag", alt: [] },
+    { id: "j3", category: "jours", fr: "Mercredi", nl: "Woensdag", alt: [] },
+    { id: "j4", category: "jours", fr: "Jeudi", nl: "Donderdag", alt: [] },
+    { id: "j5", category: "jours", fr: "Vendredi", nl: "Vrijdag", alt: [] },
+    { id: "j6", category: "jours", fr: "Samedi", nl: "Zaterdag", alt: [] },
+    { id: "j7", category: "jours", fr: "Dimanche", nl: "Zondag", alt: [] }
   ]
 };
 
